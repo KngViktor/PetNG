@@ -5,6 +5,7 @@ import { formatDate, posts } from "@/lib/posts";
 import { pets } from "@/lib/site";
 import { PageHero } from "@/components/ui";
 import { ArrowRight } from "@/components/Icons";
+import { Reveal } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -43,7 +44,8 @@ export default function BlogPage() {
         </Link>
       </section>
 
-      <section className="container-px mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <section className="container-px mt-6">
+        <Reveal stagger className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {rest.map((p) => (
           <Link key={p.slug} href={`/blog/${p.slug}`} className="group flex flex-col overflow-hidden rounded-[2rem] bg-white">
             <div className="relative h-60 overflow-hidden">
@@ -60,6 +62,7 @@ export default function BlogPage() {
             </div>
           </Link>
         ))}
+        </Reveal>
       </section>
     </>
   );

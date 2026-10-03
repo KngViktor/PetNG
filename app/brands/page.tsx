@@ -6,6 +6,7 @@ import { pets, site } from "@/lib/site";
 import { ProductArt } from "@/components/ProductArt";
 import { PageHero } from "@/components/ui";
 import { ArrowRight, CheckIcon } from "@/components/Icons";
+import { Reveal } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: "Brands",
@@ -25,7 +26,7 @@ export default function BrandsPage() {
       />
 
       <section className="container-px mt-10">
-        <div className="grid gap-4 rounded-[2rem] bg-white p-6 md:grid-cols-3 md:p-8">
+        <Reveal stagger className="grid gap-4 rounded-[2rem] bg-white p-6 md:grid-cols-3 md:p-8">
           {[
             ["Safety first", "Independent lab testing for materials and ingredients."],
             ["Pet-panel approved", "Every new brand is trialled by our 60+ pet testers."],
@@ -41,10 +42,11 @@ export default function BrandsPage() {
               </div>
             </div>
           ))}
-        </div>
+        </Reveal>
       </section>
 
-      <section className="container-px mt-12 grid gap-6 lg:grid-cols-2">
+      <section className="container-px mt-12">
+        <Reveal stagger className="grid gap-6 lg:grid-cols-2">
         {brands.map((b) => {
           const items = products.filter((p) => p.brand === b.slug);
           return (
@@ -96,10 +98,11 @@ export default function BrandsPage() {
             </article>
           );
         })}
+        </Reveal>
       </section>
 
       <section className="container-px mt-12">
-        <div className="rounded-[2rem] bg-forest p-8 text-center text-white md:p-12">
+        <Reveal variant="scale" className="rounded-[2rem] bg-forest p-8 text-center text-white md:p-12">
           <h2 className="font-display text-3xl font-medium md:text-4xl">Are you a pet brand?</h2>
           <p className="mx-auto mt-3 max-w-xl text-white/70">
             We&apos;re always looking for makers who care as much as we do. Tell us about your products and we&apos;ll be in touch.
@@ -107,7 +110,7 @@ export default function BrandsPage() {
           <a href={`mailto:${site.email}?subject=Brand partnership`} className="mt-6 inline-flex rounded-full bg-tangerine px-7 py-3.5 font-semibold text-white hover:bg-tangerine-2">
             Become a partner
           </a>
-        </div>
+        </Reveal>
       </section>
     </>
   );

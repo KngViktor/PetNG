@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, PawIcon, StarIcon } from "./Icons";
+import { Reveal } from "./Motion";
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
@@ -37,18 +38,18 @@ export function SectionHeading({
   center?: boolean;
 }) {
   return (
-    <div className={`mb-10 flex flex-col gap-4 ${center ? "items-center text-center" : "md:flex-row md:items-end md:justify-between"}`}>
-      <div className={center ? "max-w-2xl" : "max-w-2xl"}>
+    <Reveal className={`mb-10 flex flex-col gap-4 ${center ? "items-center text-center" : "md:flex-row md:items-end md:justify-between"}`}>
+      <div className="max-w-2xl">
         {eyebrow && (
           <p className="mb-3 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-tangerine">
-            <PawIcon className="h-4 w-4" /> {eyebrow}
+            <PawIcon className="wiggle h-4 w-4" /> {eyebrow}
           </p>
         )}
         <h2 className="font-display text-4xl font-medium leading-[1.05] tracking-tight text-forest md:text-5xl">{title}</h2>
         {text && <p className="mt-4 text-lg leading-relaxed text-muted">{text}</p>}
       </div>
       {action && <PillLink href={action.href}>{action.label}</PillLink>}
-    </div>
+    </Reveal>
   );
 }
 
@@ -127,11 +128,40 @@ export function PageHero({
           </div>
           <div className="relative hidden h-64 md:block">
             <div className="peek absolute inset-x-0 -bottom-14 top-0">
-              <Image src={pet} alt={petAlt} fill sizes="400px" className="object-contain object-bottom drop-shadow-2xl" priority />
+              <div className="rise absolute inset-0" style={{ animationDelay: "200ms" }}>
+                <Image src={pet} alt={petAlt} fill sizes="400px" className="object-contain object-bottom drop-shadow-2xl" priority />
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+/** Infinitely scrolling row. Content is rendered twice so the loop is seamless. */
+export function Marquee({
+  children,
+  duration = 40,
+  reverse = false,
+  className = "",
+  rowClassName = "gap-10 pr-10",
+}: {
+  children: React.ReactNode;
+  duration?: number;
+  reverse?: boolean;
+  className?: string;
+  /** Must include a right padding equal to the gap so both halves line up. */
+  rowClassName?: string;
+}) {
+  return (
+    <div className={`marquee overflow-hidden ${className}`} style={{ "--marquee-duration": `${duration}s` } as React.CSSProperties}>
+      <div className={`marquee-track flex w-max ${reverse ? "marquee-reverse" : ""}`}>
+        <div className={`flex shrink-0 items-center ${rowClassName}`}>{children}</div>
+        <div className={`flex shrink-0 items-center ${rowClassName}`} aria-hidden>
+          {children}
+        </div>
+      </div>
+    </div>
   );
 }

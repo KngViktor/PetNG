@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { pets } from "@/lib/site";
+import { formatPrice, pets, site } from "@/lib/site";
 import { products } from "@/lib/products";
 import { PageHero } from "@/components/ui";
 import { ShopView } from "@/components/ShopView";
@@ -16,7 +16,7 @@ export default function ShopPage() {
       <PageHero
         eyebrow={`${products.length} products`}
         title="Shop everything for your pet"
-        text="Food, toys, bowls, beds and more — every product tested by our pet panel. Free delivery on orders over $50."
+        text={`Food, toys, bowls, beds and more — every product tested by our pet panel. Free delivery on orders over ${formatPrice(site.freeShippingFrom)}.`}
         pet={pets.huskyPuppy}
         petAlt="Husky puppy"
         crumbs={[{ href: "/shop", label: "Shop" }]}

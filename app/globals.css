@@ -44,6 +44,7 @@ html {
 }
 
 body {
+  overflow-x: clip;
   background: var(--color-mint);
   color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
@@ -111,4 +112,158 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-tangerine);
   outline-offset: 2px;
+}
+
+/* ───────── Motion ───────── */
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: var(--reveal-from, translateY(40px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes rise-in {
+  from {
+    transform: translateY(45%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em) rotate(2deg);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  70% {
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+.reveal-up {
+  --reveal-from: translateY(44px);
+}
+.reveal-down {
+  --reveal-from: translateY(-32px);
+}
+.reveal-left {
+  --reveal-from: translateX(-56px);
+}
+.reveal-right {
+  --reveal-from: translateX(56px);
+}
+.reveal-scale {
+  --reveal-from: scale(0.92);
+}
+.reveal-rise {
+  --reveal-from: translateY(30%);
+}
+
+/* Only hide when JS is running, so content is never lost without it. */
+.js .reveal:not(.is-visible),
+.js .reveal-stagger:not(.is-visible) > * {
+  opacity: 0;
+}
+.js .reveal.is-visible {
+  animation: reveal-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms) both;
+}
+.js .reveal-stagger.is-visible > * {
+  animation: reveal-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) calc(var(--reveal-delay, 0ms) + var(--i, 0) * 90ms) both;
+}
+.reveal-stagger > :nth-child(2) { --i: 1; }
+.reveal-stagger > :nth-child(3) { --i: 2; }
+.reveal-stagger > :nth-child(4) { --i: 3; }
+.reveal-stagger > :nth-child(5) { --i: 4; }
+.reveal-stagger > :nth-child(6) { --i: 5; }
+.reveal-stagger > :nth-child(7) { --i: 6; }
+.reveal-stagger > :nth-child(8) { --i: 7; }
+.reveal-stagger > :nth-child(n + 9) { --i: 8; }
+
+/* Hero entrance */
+.word {
+  display: inline-block;
+  animation: word-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.rise {
+  animation: rise-in 1.2s cubic-bezier(0.16, 0.84, 0.3, 1) both;
+}
+.pop {
+  animation: pop-in 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.hover-wiggle:hover .wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+/* Infinite marquee: the track holds two identical halves and slides by 50%. */
+.marquee {
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-track {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee-reverse {
+  animation-direction: reverse;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Header gets a soft shadow once the page is scrolled. */
+html[data-scrolled="true"] .site-header {
+  box-shadow: 0 10px 30px -18px rgba(5, 59, 6, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js .reveal:not(.is-visible),
+  .js .reveal-stagger:not(.is-visible) > * {
+    opacity: 1;
+  }
+  .marquee-track {
+    animation: none;
+  }
 }

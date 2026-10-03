@@ -7,6 +7,7 @@ import { categories, priceBounds, products, type Category, type Pet } from "@/li
 import { formatPrice } from "@/lib/site";
 import { ProductCard } from "./ProductCard";
 import { CloseIcon, FilterIcon, SearchIcon } from "./Icons";
+import { Reveal } from "./Motion";
 
 const sorts = {
   featured: "Featured",
@@ -119,6 +120,7 @@ export function ShopView() {
           type="range"
           min={priceBounds.min}
           max={priceBounds.max}
+          step={1000}
           value={max}
           onChange={(e) => update({ max: Number(e.target.value) >= priceBounds.max ? null : e.target.value })}
           className="w-full accent-tangerine"
@@ -221,11 +223,11 @@ export function ShopView() {
         </div>
 
         {results.length > 0 ? (
-          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <Reveal stagger className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {results.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
-          </div>
+          </Reveal>
         ) : (
           <div className="mt-6 rounded-[2rem] bg-white p-12 text-center">
             <p className="font-display text-2xl text-forest">No products found</p>

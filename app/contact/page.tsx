@@ -3,6 +3,7 @@ import { pets, site } from "@/lib/site";
 import { PageHero } from "@/components/ui";
 import { ContactForm } from "@/components/ContactForm";
 import { ChatIcon, ClockIcon, MailIcon, PhoneIcon, PinIcon } from "@/components/Icons";
+import { Reveal } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -27,7 +28,7 @@ export default function ContactPage() {
         crumbs={[{ href: "/contact", label: "Contact" }]}
       />
       <section className="container-px mt-10 grid gap-6 lg:grid-cols-[1fr_1.3fr]">
-        <div className="space-y-4">
+        <Reveal stagger className="space-y-4">
           {cards.map(({ icon: Icon, title, text, href }) => {
             const body = (
               <>
@@ -57,7 +58,7 @@ export default function ContactPage() {
               personalised recommendations — free.
             </p>
           </div>
-        </div>
+        </Reveal>
         <ContactForm />
       </section>
     </>

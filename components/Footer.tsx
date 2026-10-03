@@ -5,12 +5,13 @@ import { categories } from "@/lib/products";
 import { FacebookIcon, InstagramIcon, MailIcon, PhoneIcon, PinIcon, TikTokIcon, YouTubeIcon } from "./Icons";
 import { Logo } from "./ui";
 import { Newsletter } from "./Newsletter";
+import { Parallax, Reveal } from "./Motion";
 
 export function Footer() {
   return (
     <footer className="mt-24">
       <div className="container-px">
-        <div className="relative grid overflow-hidden rounded-[2rem] bg-leaf px-6 py-10 md:grid-cols-[1fr_auto] md:items-center md:px-14 md:py-14">
+        <Reveal variant="scale" className="relative grid overflow-hidden rounded-[2rem] bg-leaf px-6 py-10 md:grid-cols-[1fr_auto] md:items-center md:px-14 md:py-14">
           <div className="relative z-10 max-w-xl">
             <h2 className="font-display text-4xl font-medium leading-tight tracking-tight text-forest md:text-5xl">
               Join the pack &amp; get 10% off your first order
@@ -19,9 +20,11 @@ export function Footer() {
             <Newsletter />
           </div>
           <div className="peek pointer-events-none relative -mb-14 mt-6 hidden h-72 w-80 md:block">
-            <Image src={pets.maltipoo} alt="" fill sizes="320px" className="object-contain object-bottom" />
+            <Parallax speed={0.1} className="absolute inset-0">
+              <Image src={pets.maltipoo} alt="" fill sizes="320px" className="object-contain object-bottom" />
+            </Parallax>
           </div>
-        </div>
+        </Reveal>
       </div>
 
       <div className="mt-16 bg-forest text-white">
@@ -42,7 +45,7 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="grid h-11 w-11 place-items-center rounded-full bg-white/10 transition hover:bg-tangerine"
+                  className="grid h-11 w-11 place-items-center rounded-full bg-white/10 transition hover:-translate-y-1 hover:bg-tangerine"
                 >
                   <Icon className="h-5 w-5" />
                 </a>

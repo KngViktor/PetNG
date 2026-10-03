@@ -3,12 +3,12 @@ export const site = {
   tagline: "Everything Your Pets Love",
   description:
     "PetNG is a pet store for dogs and cats: food, toys, bowls, beds, grooming and travel gear, picked by pet owners and delivered fast.",
-  currency: "$",
+  currency: "₦",
   email: "hello@petng.com",
   phone: "+1 (555) 014-7729",
   address: "24 Willow Lane, Greenfield",
   hours: "Mon–Sat, 8:00–20:00",
-  freeShippingFrom: 50,
+  freeShippingFrom: 75000,
   social: {
     tiktok: "https://www.tiktok.com/",
     youtube: "https://www.youtube.com/",
@@ -31,8 +31,10 @@ export const nav = [
   { href: "/blog", label: "Blog" },
 ];
 
+const naira = new Intl.NumberFormat("en-NG", { maximumFractionDigits: 0 });
+
 export function formatPrice(value: number) {
-  return `${site.currency}${value.toFixed(2)}`;
+  return `${site.currency}${naira.format(Math.round(value))}`;
 }
 
 /** Transparent cut-out pet images (background removed). */

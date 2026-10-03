@@ -9,6 +9,7 @@ import { ProductActions } from "@/components/ProductActions";
 import { ProductCard } from "@/components/ProductCard";
 import { CheckIcon, ReturnIcon, ShieldIcon, TruckIcon } from "@/components/Icons";
 import { SectionHeading, Stars } from "@/components/ui";
+import { Reveal } from "@/components/Motion";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -48,7 +49,7 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       <section className="container-px mt-6 grid gap-8 lg:grid-cols-2 lg:gap-14">
-        <div className="relative rounded-[2rem] bg-white p-6 md:p-12">
+        <Reveal variant="left" className="relative rounded-[2rem] bg-white p-6 md:p-12">
           {product.badge && (
             <span className={`absolute left-6 top-6 rounded-full px-4 py-1.5 text-sm font-semibold ${product.badge === "Sale" ? "bg-tangerine text-white" : "bg-leaf text-forest"}`}>
               {product.badge === "Sale" ? `−${discount}%` : product.badge}
@@ -64,9 +65,9 @@ export default async function ProductPage({ params }: Props) {
               </div>
             ))}
           </div>
-        </div>
+        </Reveal>
 
-        <div className="lg:py-6">
+        <Reveal variant="right" delay={120} className="lg:py-6">
           {brand && (
             <Link href={`/brands#${brand.slug}`} className="text-sm font-semibold uppercase tracking-[0.18em] text-tangerine">
               {brand.name}
@@ -139,11 +140,11 @@ export default async function ProductPage({ params }: Props) {
               </p>
             </details>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="container-px mt-20">
-        <div className="grid gap-8 rounded-[2rem] bg-white p-6 md:p-10 lg:grid-cols-[320px_1fr]">
+        <Reveal  className="grid gap-8 rounded-[2rem] bg-white p-6 md:p-10 lg:grid-cols-[320px_1fr]">
           <div>
             <h2 className="font-display text-3xl font-medium text-forest">Customer reviews</h2>
             <p className="mt-4 font-display text-7xl font-semibold text-forest">{product.rating}</p>
@@ -180,17 +181,17 @@ export default async function ProductPage({ params }: Props) {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
       </section>
 
       {related.length > 0 && (
         <section className="container-px mt-20">
           <SectionHeading eyebrow="You may also like" title="Pairs well with" />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
-          </div>
+          </Reveal>
         </section>
       )}
     </>

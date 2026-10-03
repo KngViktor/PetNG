@@ -71,7 +71,7 @@ export const products: Product[] = [
   {
     slug: "cozy-cat-house",
     name: "Cozy Cat House",
-    price: 49.99,
+    price: 75000,
     pet: "cat",
     category: "furniture",
     brand: "purrfect-home",
@@ -100,7 +100,7 @@ export const products: Product[] = [
   {
     slug: "green-twist-mouse",
     name: "Green Twist Mouse",
-    price: 9.99,
+    price: 12500,
     pet: "cat",
     category: "toys",
     brand: "playpaw",
@@ -123,7 +123,7 @@ export const products: Product[] = [
   {
     slug: "orange-fluff-mouse",
     name: "Orange Fluff Mouse",
-    price: 9.99,
+    price: 12500,
     pet: "cat",
     category: "toys",
     brand: "playpaw",
@@ -140,7 +140,7 @@ export const products: Product[] = [
   {
     slug: "mint-dog-bowl",
     name: "Mint Dog Bowl",
-    price: 19.99,
+    price: 28000,
     pet: "dog",
     category: "bowls",
     brand: "bowlcraft",
@@ -162,8 +162,8 @@ export const products: Product[] = [
   {
     slug: "green-dog-bowl",
     name: "Green Dog Bowl",
-    price: 29.99,
-    oldPrice: 34.99,
+    price: 42000,
+    oldPrice: 49000,
     pet: "dog",
     category: "bowls",
     brand: "bowlcraft",
@@ -181,7 +181,7 @@ export const products: Product[] = [
   {
     slug: "orange-cat-bowl",
     name: "Orange Cat Bowl",
-    price: 14.99,
+    price: 21000,
     pet: "cat",
     category: "bowls",
     brand: "bowlcraft",
@@ -197,7 +197,7 @@ export const products: Product[] = [
   {
     slug: "sage-fish-bowl",
     name: "Sage Fish Bowl",
-    price: 17.99,
+    price: 25000,
     pet: "cat",
     category: "bowls",
     brand: "bowlcraft",
@@ -213,7 +213,7 @@ export const products: Product[] = [
   {
     slug: "rope-tug-toy",
     name: "Triple Knot Rope Tug",
-    price: 12.99,
+    price: 18000,
     pet: "dog",
     category: "toys",
     brand: "playpaw",
@@ -229,8 +229,8 @@ export const products: Product[] = [
   {
     slug: "orthopedic-dog-bed",
     name: "Cloud Orthopedic Bed",
-    price: 79.99,
-    oldPrice: 99.99,
+    price: 115000,
+    oldPrice: 140000,
     pet: "dog",
     category: "beds",
     brand: "purrfect-home",
@@ -253,7 +253,7 @@ export const products: Product[] = [
   {
     slug: "reflective-leash",
     name: "Night Walk Reflective Leash",
-    price: 24.99,
+    price: 35000,
     pet: "dog",
     category: "walking",
     brand: "trailtail",
@@ -269,7 +269,7 @@ export const products: Product[] = [
   {
     slug: "leather-collar",
     name: "Classic Leather Collar",
-    price: 22.99,
+    price: 32000,
     pet: "dog",
     category: "walking",
     brand: "trailtail",
@@ -285,7 +285,7 @@ export const products: Product[] = [
   {
     slug: "grain-free-dog-food",
     name: "Grain-Free Chicken Kibble",
-    price: 54.99,
+    price: 78000,
     pet: "dog",
     category: "food",
     brand: "wild-harvest",
@@ -302,7 +302,7 @@ export const products: Product[] = [
   {
     slug: "salmon-cat-food",
     name: "Wild Salmon Cat Food",
-    price: 39.99,
+    price: 56000,
     pet: "cat",
     category: "food",
     brand: "wild-harvest",
@@ -318,7 +318,7 @@ export const products: Product[] = [
   {
     slug: "dental-chew-treats",
     name: "Fresh Breath Dental Chews",
-    price: 11.99,
+    price: 16500,
     pet: "dog",
     category: "treats",
     brand: "wild-harvest",
@@ -335,7 +335,7 @@ export const products: Product[] = [
   {
     slug: "slicker-brush",
     name: "Self-Cleaning Slicker Brush",
-    price: 15.99,
+    price: 22000,
     pet: "all",
     category: "grooming",
     brand: "fluffcare",
@@ -351,7 +351,7 @@ export const products: Product[] = [
   {
     slug: "oatmeal-shampoo",
     name: "Oatmeal & Aloe Shampoo",
-    price: 13.99,
+    price: 19500,
     pet: "all",
     category: "grooming",
     brand: "fluffcare",
@@ -367,7 +367,7 @@ export const products: Product[] = [
   {
     slug: "travel-carrier",
     name: "Explorer Travel Carrier",
-    price: 64.99,
+    price: 92000,
     pet: "cat",
     category: "travel",
     brand: "trailtail",
@@ -383,7 +383,7 @@ export const products: Product[] = [
   {
     slug: "squeaky-ball-set",
     name: "Squeaky Ball Trio",
-    price: 8.99,
+    price: 12000,
     pet: "dog",
     category: "toys",
     brand: "playpaw",
@@ -407,6 +407,6 @@ export function categoryLabel(slug: Category) {
 }
 
 export const priceBounds = {
-  min: Math.floor(Math.min(...products.map((p) => p.price))),
-  max: Math.ceil(Math.max(...products.map((p) => p.price))),
+  min: Math.floor(Math.min(...products.map((p) => p.price)) / 1000) * 1000,
+  max: Math.ceil(Math.max(...products.map((p) => p.price)) / 1000) * 1000,
 };

@@ -1,11 +1,11 @@
 import { site } from "./site";
 import type { Product } from "./products";
 
-export const STANDARD_SHIPPING = 4.99;
+export const STANDARD_SHIPPING = 3500;
 
 export const shippingMethods = [
   { id: "standard", label: "Standard (2–4 days)", price: STANDARD_SHIPPING },
-  { id: "express", label: "Express (next day)", price: 9.99 },
+  { id: "express", label: "Express (next day)", price: 7500 },
   { id: "pickup", label: "Click & collect", price: 0 },
 ] as const;
 

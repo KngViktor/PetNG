@@ -6,7 +6,8 @@ import { brands } from "@/lib/brands";
 import { formatDate, posts } from "@/lib/posts";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductArt } from "@/components/ProductArt";
-import { PillLink, SectionHeading, Stars } from "@/components/ui";
+import { Marquee, PillLink, SectionHeading, Stars } from "@/components/ui";
+import { CountUp, Parallax, Reveal } from "@/components/Motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -33,7 +34,8 @@ export default function HomePage() {
         {/* Floating featured product (desktop) */}
         <Link
           href={`/shop/${featured.slug}`}
-          className="group absolute left-6 top-14 z-20 hidden w-52 text-center lg:block xl:left-12"
+          className="group absolute left-6 top-14 z-20 hidden w-52 text-center animate-fade-up lg:block xl:left-12"
+          style={{ animationDelay: "650ms" }}
         >
           <div className="relative mx-auto w-44 animate-float">
             <ProductArt art={featured.art} label={featured.name} className="w-full" />
@@ -50,10 +52,11 @@ export default function HomePage() {
           href={site.social.tiktok}
           target="_blank"
           rel="noreferrer"
-          className="group absolute right-6 top-14 z-20 hidden w-48 overflow-hidden rounded-2xl bg-white shadow-lg shadow-forest/5 lg:block xl:right-12"
+          className="group absolute right-6 top-14 z-20 hidden w-48 overflow-hidden rounded-2xl bg-white shadow-lg shadow-forest/5 transition hover:-translate-y-1 hover:shadow-xl animate-fade-up lg:block xl:right-12"
+          style={{ animationDelay: "800ms" }}
         >
           <div className="relative h-36">
-            <Image src={photos.borderCollie} alt="Border collie in a PetNG product review" fill sizes="224px" className="object-cover object-top" />
+            <Image src={photos.borderCollie} alt="Border collie in a PetNG product review" fill sizes="224px" className="object-cover object-top transition duration-700 group-hover:scale-110" />
           </div>
           <span className="absolute left-1/2 top-36 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-forest text-white ring-4 ring-white transition group-hover:scale-110">
             <PlayIcon className="ml-0.5 h-5 w-5" />
@@ -61,10 +64,17 @@ export default function HomePage() {
           <p className="px-4 pb-5 pt-9 text-center leading-snug text-forest">Watch Product Reviews on TikTok and YouTube</p>
         </a>
 
-        <h1 className="relative z-0 text-center font-display text-[clamp(3.2rem,9vw,5.5rem)] lg:text-[clamp(5.5rem,7.6vw,8.4rem)] font-medium leading-[0.88] tracking-[-0.055em] text-forest animate-fade-up">
-          Everything
-          <br />
-          Your Pets Love
+        <h1 className="relative z-0 text-center font-display text-[clamp(3.2rem,9vw,5.5rem)] lg:text-[clamp(5.5rem,7.6vw,8.4rem)] font-medium leading-[0.88] tracking-[-0.055em] text-forest">
+          {["Everything", null, "Your", "Pets", "Love"].map((w, i) =>
+            w === null ? (
+              <br key={i} />
+            ) : (
+              <span key={i} className="word" style={{ animationDelay: `${i * 110}ms` }}>
+                {w}
+                {i > 1 && i < 4 ? "\u00a0" : ""}
+              </span>
+            ),
+          )}
         </h1>
 
         {/* Pets + cards band */}
@@ -72,7 +82,8 @@ export default function HomePage() {
           {/* Center: big dog + CTA (first on mobile) */}
           <div className="lg:order-2">
             <div className="peek relative mx-auto h-[300px] max-w-md sm:h-[380px] lg:h-[400px] lg:max-w-none">
-              <div className="absolute inset-x-0 top-0 h-[150%]">
+              <Parallax speed={0.06} className="absolute inset-0">
+              <div className="rise absolute inset-x-0 top-0 h-[150%]" style={{ animationDelay: "250ms" }}>
                 <Image
                   src={pets.goldenPuppy}
                   alt="Golden retriever puppy"
@@ -82,6 +93,7 @@ export default function HomePage() {
                   className="object-contain object-top drop-shadow-[0_20px_30px_rgba(5,59,6,0.25)]"
                 />
               </div>
+              </Parallax>
             </div>
             <div className="flex flex-col items-center rounded-[2rem] bg-forest px-6 py-10 text-center text-white lg:min-h-[300px] lg:justify-center lg:rounded-none">
               <p className="font-display text-3xl leading-tight md:text-4xl">
@@ -98,18 +110,22 @@ export default function HomePage() {
           {/* Left: stat + puppy */}
           <div className="lg:order-1">
             <div className="peek relative mx-auto h-[220px] max-w-xs lg:h-[230px] lg:max-w-[300px]">
-              <div className="absolute inset-x-0 top-0 h-[175%]">
-                <Image src={pets.labPuppy} alt="Chocolate Labrador puppy" fill sizes="340px" className="object-contain object-top" />
-              </div>
+              <Parallax speed={0.14} className="absolute inset-0">
+                <div className="rise absolute inset-x-0 top-0 h-[175%]" style={{ animationDelay: "450ms" }}>
+                  <Image src={pets.labPuppy} alt="Chocolate Labrador puppy" fill sizes="340px" className="object-contain object-top" />
+                </div>
+              </Parallax>
             </div>
             <div className="flex flex-col items-center rounded-[2rem] bg-leaf px-6 py-10 text-center lg:min-h-[300px] lg:justify-center lg:rounded-none lg:rounded-l-[2rem]">
               <div className="flex items-center gap-4">
-                <span className="font-display text-6xl font-semibold tracking-tight text-forest">{site.stats.happyClients}</span>
+                <span className="font-display text-6xl font-semibold tracking-tight text-forest">
+                  <CountUp to={98} suffix="K+" />
+                </span>
                 <div className="flex -space-x-3">
                   <span className="relative h-14 w-14 overflow-hidden rounded-full border-2 border-leaf bg-white">
                     <Image src={photos.catCalico} alt="" fill sizes="56px" className="object-cover" />
                   </span>
-                  <Link href="/about" aria-label="About our community" className="grid h-14 w-14 place-items-center rounded-full border-2 border-leaf bg-forest text-white">
+                  <Link href="/about" aria-label="About our community" className="grid h-14 w-14 place-items-center rounded-full border-2 border-leaf bg-forest text-white transition hover:rotate-90 hover:bg-tangerine">
                     <PlusIcon className="h-6 w-6" />
                   </Link>
                 </div>
@@ -121,13 +137,15 @@ export default function HomePage() {
           {/* Right: rating + cat */}
           <div className="lg:order-3">
             <div className="peek relative mx-auto h-[220px] max-w-xs lg:h-[230px] lg:max-w-[280px]">
-              <div className="absolute inset-x-0 top-0 h-[190%]">
-                <Image src={pets.catGinger} alt="Ginger tabby cat" fill sizes="320px" className="object-contain object-top" />
-              </div>
+              <Parallax speed={0.14} className="absolute inset-0">
+                <div className="rise absolute inset-x-0 top-0 h-[190%]" style={{ animationDelay: "600ms" }}>
+                  <Image src={pets.catGinger} alt="Ginger tabby cat" fill sizes="320px" className="object-contain object-top" />
+                </div>
+              </Parallax>
             </div>
             <div className="flex flex-col items-center rounded-[2rem] bg-leaf px-6 py-10 text-center lg:min-h-[300px] lg:justify-center lg:rounded-none lg:rounded-r-[2rem]">
               <p className="flex items-center gap-2 font-display text-6xl font-semibold tracking-tight text-forest">
-                {site.stats.rating} <StarIcon className="h-12 w-12 text-tangerine" />
+                <CountUp to={site.stats.rating} decimals={1} /> <StarIcon className="h-12 w-12 animate-[spin_6s_linear_infinite] text-tangerine" />
               </p>
               <p className="mt-4 max-w-[17rem] text-lg leading-snug text-forest/80">Based on Reviews from Happy Pet Owners Worldwide</p>
             </div>
@@ -153,9 +171,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ───────────────────────── TICKER ───────────────────────── */}
+      <div className="mt-16 -rotate-1 bg-tangerine py-4 text-white">
+        <Marquee duration={30} rowClassName="gap-8 pr-8">
+          {[
+            `Free delivery over ${formatPrice(site.freeShippingFrom)}`,
+            "30-day returns",
+            "Vet approved products",
+            "Same-day dispatch before 2pm",
+            `${site.stats.happyClients} happy pets`,
+            "Earn paw points on every order",
+          ].map((t) => (
+            <span key={t} className="flex items-center gap-8 whitespace-nowrap font-display text-2xl font-medium">
+              {t}
+              <PawIcon className="h-6 w-6 text-forest" />
+            </span>
+          ))}
+        </Marquee>
+      </div>
+
       {/* ───────────────────────── PERKS STRIP ───────────────────────── */}
       <section className="container-px mt-16">
-        <div className="grid gap-4 rounded-[2rem] bg-white p-6 sm:grid-cols-2 lg:grid-cols-4 lg:p-8">
+        <Reveal stagger className="grid gap-4 rounded-[2rem] bg-white p-6 sm:grid-cols-2 lg:grid-cols-4 lg:p-8">
           {[
             { icon: TruckIcon, title: "Free delivery", text: `On every order over ${formatPrice(site.freeShippingFrom)}` },
             { icon: ReturnIcon, title: "30-day returns", text: "Not a fan? Send it back, free" },
@@ -163,7 +200,7 @@ export default function HomePage() {
             { icon: PawIcon, title: "Paw points", text: "Earn 5% back on every purchase" },
           ].map(({ icon: Icon, title, text }) => (
             <div key={title} className="flex items-center gap-4">
-              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-mint text-forest">
+              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-mint text-forest transition duration-500 hover:rotate-12 hover:bg-leaf">
                 <Icon className="h-7 w-7" />
               </span>
               <div>
@@ -172,13 +209,13 @@ export default function HomePage() {
               </div>
             </div>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* ───────────────────────── SHOP BY PET ───────────────────────── */}
       <section className="container-px mt-24">
         <SectionHeading eyebrow="Shop by pet" title="Who are we spoiling today?" />
-        <div className="grid gap-6 md:grid-cols-2">
+        <Reveal stagger className="grid gap-6 md:grid-cols-2">
           {[
             {
               href: "/shop?pet=dog",
@@ -208,18 +245,18 @@ export default function HomePage() {
                   </span>
                 </span>
               </div>
-              <div className="absolute -bottom-6 right-0 top-6 w-[50%] transition duration-500 group-hover:scale-105">
+              <div className="absolute -bottom-6 right-0 top-6 w-[50%] transition duration-700 group-hover:-translate-y-3 group-hover:scale-105">
                 <Image src={c.img} alt="" fill sizes="(min-width:768px) 320px, 50vw" className="object-contain object-bottom drop-shadow-2xl" />
               </div>
             </Link>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* ───────────────────────── CATEGORIES ───────────────────────── */}
       <section className="container-px mt-24">
         <SectionHeading eyebrow="Categories" title="Find exactly what they need" action={{ href: "/shop", label: "View all" }} />
-        <div className="no-scrollbar -mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-3 md:px-0 lg:grid-cols-5">
+        <Reveal stagger className="no-scrollbar -mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:grid-cols-3 md:px-0 lg:grid-cols-5">
           {categories
             .filter((c) => ["food", "toys", "bowls", "furniture", "walking"].includes(c.slug))
             .map((c) => {
@@ -232,7 +269,7 @@ export default function HomePage() {
                   className="group w-56 shrink-0 snap-start rounded-[1.75rem] bg-white p-5 transition hover:bg-leaf md:w-auto"
                 >
                   <div className="rounded-2xl bg-mint p-3 transition group-hover:bg-white/70">
-                    <ProductArt art={sample.art} label="" className="mx-auto h-32 w-32 transition duration-500 group-hover:scale-110" />
+                    <ProductArt art={sample.art} label="" className="mx-auto h-32 w-32 transition duration-500 group-hover:-rotate-6 group-hover:scale-110" />
                   </div>
                   <p className="mt-4 font-display text-xl font-semibold text-forest">{c.label}</p>
                   <p className="text-sm text-muted">
@@ -241,30 +278,30 @@ export default function HomePage() {
                 </Link>
               );
             })}
-        </div>
+        </Reveal>
       </section>
 
       {/* ───────────────────────── NEW ARRIVALS ───────────────────────── */}
       <section className="container-px mt-24">
-        <div className="rounded-[2rem] bg-leaf p-6 md:p-12">
+        <Reveal variant="scale" className="rounded-[2rem] bg-leaf p-6 md:p-12">
           <SectionHeading
             eyebrow="Just landed"
             title="New Arrivals"
             text="Fresh picks our team (and their pets) have been testing all month."
             action={{ href: "/shop?sort=new", label: "Shop new" }}
           />
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {newArrivals.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
-          </div>
-        </div>
+          </Reveal>
+        </Reveal>
       </section>
 
       {/* ───────────────────────── VIDEO + WHY ───────────────────────── */}
       <section className="container-px mt-24 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-        <div className="relative min-h-[420px] overflow-hidden rounded-[2rem] bg-forest">
-          <Image src={photos.huskyRedPuppy} alt="Husky puppy playing on the grass" fill sizes="(min-width:1024px) 640px, 100vw" className="object-cover opacity-80" />
+        <Reveal variant="left" className="group relative min-h-[420px] overflow-hidden rounded-[2rem] bg-forest">
+          <Image src={photos.huskyRedPuppy} alt="Husky puppy playing on the grass" fill sizes="(min-width:1024px) 640px, 100vw" className="object-cover opacity-80 transition duration-1000 group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-forest via-forest/20 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-8 text-white md:p-10">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-leaf">PetNG TV</p>
@@ -285,10 +322,11 @@ export default function HomePage() {
             aria-label="Play review video"
             className="absolute left-1/2 top-1/3 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-forest ring-8 ring-white/30 transition hover:scale-110"
           >
-            <PlayIcon className="ml-1 h-7 w-7" />
+            <span className="absolute inset-0 animate-ping rounded-full bg-white/40" />
+            <PlayIcon className="relative ml-1 h-7 w-7" />
           </a>
-        </div>
-        <div className="flex flex-col justify-between gap-6 rounded-[2rem] bg-white p-8 md:p-10">
+        </Reveal>
+        <Reveal variant="right" delay={120} className="flex flex-col justify-between gap-6 rounded-[2rem] bg-white p-8 md:p-10">
           <div>
             <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-tangerine">
               <PawIcon className="h-4 w-4" /> Why PetNG
@@ -313,17 +351,17 @@ export default function HomePage() {
           <PillLink href="/about" variant="dark">
             Our story
           </PillLink>
-        </div>
+        </Reveal>
       </section>
 
       {/* ───────────────────────── BESTSELLERS ───────────────────────── */}
       <section className="container-px mt-24">
         <SectionHeading eyebrow="Most loved" title="Bestsellers" action={{ href: "/shop?sort=popular", label: "See all" }} />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {bestsellers.map((p) => (
             <ProductCard key={p.slug} product={p} />
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* ───────────────────────── COMMUNITY / TESTIMONIALS ───────────────────────── */}
@@ -334,7 +372,7 @@ export default function HomePage() {
           title="Meet the pack"
           text={`Over ${site.stats.happyClients} pets and their humans shop with us. Here's what a few of them say.`}
         />
-        <div className="grid gap-6 md:grid-cols-3">
+        <Reveal stagger className="grid gap-6 md:grid-cols-3">
           {[
             {
               pet: pets.huskyPuppy,
@@ -361,7 +399,7 @@ export default function HomePage() {
               bg: "bg-tangerine text-white",
             },
           ].map((t) => (
-            <figure key={t.name} className={`relative flex flex-col overflow-hidden rounded-[2rem] p-8 ${t.bg}`}>
+            <figure key={t.name} className={`group relative flex flex-col overflow-hidden rounded-[2rem] p-8 transition duration-500 hover:-translate-y-2 ${t.bg}`}>
               <Stars value={5} />
               <blockquote className="mt-4 flex-1 text-lg leading-relaxed">“{t.quote}”</blockquote>
               <figcaption className="mt-6 flex items-end justify-between">
@@ -373,48 +411,52 @@ export default function HomePage() {
                 </div>
                 <div className="peek relative -mb-8 h-32 w-28">
                   <div className="absolute inset-x-0 top-0 h-[150%]">
-                    <Image src={t.pet} alt={`${t.name} the ${t.breed}`} fill sizes="112px" className="object-contain object-top" />
+                    <Image src={t.pet} alt={`${t.name} the ${t.breed}`} fill sizes="112px" className="object-contain object-top transition duration-500 group-hover:-translate-y-3" />
                   </div>
                 </div>
               </figcaption>
             </figure>
           ))}
-        </div>
+        </Reveal>
 
-        <div className="no-scrollbar mt-6 flex gap-4 overflow-x-auto pb-2">
-          {[photos.goldenPuppy, photos.catCalico, photos.germanShepherd, photos.maltipoo, photos.catGinger, photos.huskyBrown, photos.labPuppy, photos.catWhite].map(
+        <Marquee reverse duration={45} className="mt-8 py-2" rowClassName="gap-4 pr-4">
+          {[photos.goldenPuppy, photos.catCalico, photos.germanShepherd, photos.maltipoo, photos.catGinger, photos.huskyBrown, photos.labPuppy, photos.catWhite, photos.huskyPuppy, photos.catFluffy].map(
             (src, i) => (
-              <div key={src} className={`relative h-56 w-44 shrink-0 overflow-hidden rounded-[1.5rem] ${i % 2 ? "mt-6" : ""}`}>
+              <div key={src} className={`relative h-56 w-44 shrink-0 overflow-hidden rounded-[1.5rem] ${i % 2 ? "translate-y-4" : "-translate-y-2"}`}>
                 <Image src={src} alt="A PetNG customer's pet" fill sizes="176px" className="object-cover transition duration-500 hover:scale-110" />
               </div>
             ),
           )}
-        </div>
+        </Marquee>
       </section>
 
       {/* ───────────────────────── BRANDS ───────────────────────── */}
       <section className="container-px mt-24">
-        <div className="flex flex-col items-center justify-between gap-6 rounded-[2rem] bg-white px-6 py-8 md:flex-row md:px-10">
+        <Reveal className="flex flex-col items-center gap-6 rounded-[2rem] bg-white px-6 py-8 md:flex-row md:px-10">
           <p className="shrink-0 font-display text-xl font-semibold text-forest">Brands we trust</p>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+          <Marquee duration={28} className="w-full min-w-0 flex-1" rowClassName="gap-12 pr-12">
             {brands.map((b) => (
-              <Link key={b.slug} href={`/brands#${b.slug}`} className="flex items-center gap-2 font-display text-xl font-semibold text-forest/50 transition hover:text-forest">
-                <span className="grid h-8 w-8 place-items-center rounded-full text-sm text-white" style={{ background: b.color }}>
+              <Link
+                key={b.slug}
+                href={`/brands#${b.slug}`}
+                className="flex items-center gap-3 whitespace-nowrap font-display text-2xl font-semibold text-forest/50 transition hover:text-forest"
+              >
+                <span className="grid h-10 w-10 place-items-center rounded-full text-base text-white" style={{ background: b.color }}>
                   {b.name[0]}
                 </span>
                 {b.name}
               </Link>
             ))}
-          </div>
-        </div>
+          </Marquee>
+        </Reveal>
       </section>
 
       {/* ───────────────────────── BLOG ───────────────────────── */}
       <section className="container-px mt-24">
         <SectionHeading eyebrow="From the blog" title="Pet care, made simple" action={{ href: "/blog", label: "All articles" }} />
-        <div className="grid gap-6 md:grid-cols-3">
+        <Reveal stagger className="grid gap-6 md:grid-cols-3">
           {posts.slice(0, 3).map((p) => (
-            <Link key={p.slug} href={`/blog/${p.slug}`} className="group overflow-hidden rounded-[2rem] bg-white">
+            <Link key={p.slug} href={`/blog/${p.slug}`} className="group overflow-hidden rounded-[2rem] bg-white transition duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-forest/10">
               <div className="relative h-60 overflow-hidden">
                 <Image src={p.cover} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover object-[center_25%] transition duration-500 group-hover:scale-105" />
                 <span className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-xs font-semibold text-forest">{p.category}</span>
@@ -427,7 +469,7 @@ export default function HomePage() {
               </div>
             </Link>
           ))}
-        </div>
+        </Reveal>
       </section>
     </>
   );

@@ -6,6 +6,7 @@ import { formatDate, getPost, posts } from "@/lib/posts";
 import { getProduct } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
 import { PawIcon } from "@/components/Icons";
+import { Reveal } from "@/components/Motion";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -73,18 +74,18 @@ export default async function PostPage({ params }: Props) {
         <section className="container-px mt-16">
           <div className="rounded-[2rem] bg-leaf p-6 md:p-10">
             <h2 className="mb-6 font-display text-3xl font-medium text-forest">Products mentioned in this article</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <Reveal stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((p) => (
                 <ProductCard key={p.slug} product={p} />
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       )}
 
       <section className="container-px mt-16">
         <h2 className="mb-6 font-display text-3xl font-medium text-forest">Keep reading</h2>
-        <div className="grid gap-6 md:grid-cols-3">
+        <Reveal stagger className="grid gap-6 md:grid-cols-3">
           {more.map((p) => (
             <Link key={p.slug} href={`/blog/${p.slug}`} className="group overflow-hidden rounded-[2rem] bg-white">
               <div className="relative h-48 overflow-hidden">
@@ -96,7 +97,7 @@ export default async function PostPage({ params }: Props) {
               </div>
             </Link>
           ))}
-        </div>
+        </Reveal>
       </section>
     </article>
   );

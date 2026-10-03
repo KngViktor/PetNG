@@ -29,11 +29,15 @@ export const viewport: Viewport = { themeColor: "#053b06" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${inter.variable}`}>
+    <html lang="en" className={`${outfit.variable} ${inter.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Lets CSS hide scroll-reveal content only when JavaScript is available. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body className="font-sans">
         <StoreProvider>
           <Header />
-          <main>{children}</main>
+          <main className="overflow-x-clip">{children}</main>
           <Footer />
         </StoreProvider>
       </body>

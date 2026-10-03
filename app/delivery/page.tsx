@@ -3,6 +3,7 @@ import Image from "next/image";
 import { formatPrice, pets, site } from "@/lib/site";
 import { PageHero, PillLink, SectionHeading } from "@/components/ui";
 import { BankIcon, CardIcon, CashIcon, ChevronDown, ClockIcon, PhoneIcon, PinIcon, ReturnIcon, ShieldIcon, TruckIcon } from "@/components/Icons";
+import { Reveal } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: "Delivery and payment",
@@ -10,17 +11,17 @@ export const metadata: Metadata = {
 };
 
 const options = [
-  { icon: TruckIcon, name: "Standard delivery", time: "2–4 working days", price: 4.99, note: `Free on orders over ${formatPrice(site.freeShippingFrom)}` },
-  { icon: ClockIcon, name: "Express delivery", time: "Next working day", price: 9.99, note: "Order before 2pm, Mon–Fri" },
-  { icon: TruckIcon, name: "Same-day courier", time: "Within 4 hours", price: 14.99, note: "Selected city areas, order before 12pm" },
+  { icon: TruckIcon, name: "Standard delivery", time: "2–4 working days", price: 3500, note: `Free on orders over ${formatPrice(site.freeShippingFrom)}` },
+  { icon: ClockIcon, name: "Express delivery", time: "Next working day", price: 7500, note: "Order before 2pm, Mon–Fri" },
+  { icon: TruckIcon, name: "Same-day courier", time: "Within 4 hours", price: 12000, note: "Selected city areas, order before 12pm" },
   { icon: PinIcon, name: "Click & collect", time: "Ready in 2 hours", price: 0, note: `From our store at ${site.address}` },
 ];
 
 const payments = [
-  { icon: CardIcon, name: "Credit & debit cards", text: "Visa, Mastercard, American Express and Verve. Payments are processed securely with 3-D Secure." },
+  { icon: CardIcon, name: "Credit & debit cards", text: "Verve, Visa and Mastercard via Paystack and Flutterwave. Payments are processed securely with 3-D Secure." },
   { icon: PhoneIcon, name: "Digital wallets", text: "Apple Pay, Google Pay and PayPal for one-tap checkout on mobile." },
   { icon: BankIcon, name: "Bank transfer", text: "Pay directly from your bank. Your order ships as soon as the transfer clears (usually within 1 hour)." },
-  { icon: CashIcon, name: "Pay on delivery", text: "Cash or card on delivery for orders up to $200 within our courier zones." },
+  { icon: CashIcon, name: "Pay on delivery", text: "Cash or card on delivery for orders up to ₦300,000 within our courier zones." },
 ];
 
 const faqs = [
@@ -47,20 +48,20 @@ export default function DeliveryPage() {
 
       {/* Free shipping banner */}
       <section className="container-px mt-10">
-        <div className="flex flex-col items-start justify-between gap-4 rounded-[2rem] bg-tangerine px-8 py-7 text-white md:flex-row md:items-center">
+        <Reveal variant="scale" className="flex flex-col items-start justify-between gap-4 rounded-[2rem] bg-tangerine px-8 py-7 text-white md:flex-row md:items-center">
           <p className="font-display text-2xl md:text-3xl">
             Free standard delivery on every order over <span className="font-bold">{formatPrice(site.freeShippingFrom)}</span>
           </p>
           <PillLink href="/shop" variant="light">
             Start shopping
           </PillLink>
-        </div>
+        </Reveal>
       </section>
 
       {/* Delivery options */}
       <section className="container-px mt-20">
         <SectionHeading eyebrow="Delivery" title="Choose how it gets to you" text="Orders placed before 2pm on working days are packed and dispatched the same day." />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Reveal stagger className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {options.map(({ icon: Icon, ...o }) => (
             <div key={o.name} className="flex flex-col rounded-[1.75rem] bg-white p-6">
               <span className="grid h-14 w-14 place-items-center rounded-2xl bg-leaf text-forest">
@@ -72,10 +73,10 @@ export default function DeliveryPage() {
               <p className="mt-1 text-sm text-muted">{o.note}</p>
             </div>
           ))}
-        </div>
+        </Reveal>
 
         {/* How it works */}
-        <div className="mt-6 grid gap-6 rounded-[2rem] bg-forest p-8 text-white md:grid-cols-4 md:p-10">
+        <Reveal stagger className="mt-6 grid gap-6 rounded-[2rem] bg-forest p-8 text-white md:grid-cols-4 md:p-10">
           {[
             ["Place your order", "Online or by phone, 24/7."],
             ["We pack it", "With care, in recyclable packaging."],
@@ -88,13 +89,13 @@ export default function DeliveryPage() {
               <p className="text-white/70">{d}</p>
             </div>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* Payment */}
       <section className="container-px mt-20">
         <SectionHeading eyebrow="Payment" title="Pay the way you like" text="All prices include VAT. You're only charged once your order is confirmed." />
-        <div className="grid gap-4 md:grid-cols-2">
+        <Reveal stagger className="grid gap-4 md:grid-cols-2">
           {payments.map(({ icon: Icon, ...p }) => (
             <div key={p.name} className="flex gap-5 rounded-[1.75rem] bg-white p-6">
               <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-mint text-forest">
@@ -106,7 +107,7 @@ export default function DeliveryPage() {
               </div>
             </div>
           ))}
-        </div>
+        </Reveal>
         <p className="mt-4 flex items-center gap-2 text-sm text-muted">
           <ShieldIcon className="h-5 w-5 text-pine" /> 256-bit SSL encryption on every page. We never store your full card details.
         </p>
@@ -114,7 +115,7 @@ export default function DeliveryPage() {
 
       {/* Returns */}
       <section id="returns" className="container-px mt-20 scroll-mt-24">
-        <div className="relative grid overflow-hidden rounded-[2rem] bg-leaf p-8 md:grid-cols-[1.3fr_1fr] md:p-12">
+        <Reveal  className="relative grid overflow-hidden rounded-[2rem] bg-leaf p-8 md:grid-cols-[1.3fr_1fr] md:p-12">
           <div>
             <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-forest/70">
               <ReturnIcon className="h-5 w-5" /> Returns
@@ -139,13 +140,13 @@ export default function DeliveryPage() {
               <Image src={pets.catCalico} alt="Calico cat" fill sizes="400px" className="object-contain object-top" />
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* FAQ */}
       <section id="faq" className="container-px mt-20 scroll-mt-24">
         <SectionHeading center eyebrow="FAQ" title="Frequently asked questions" />
-        <div className="mx-auto max-w-3xl space-y-3">
+        <Reveal stagger className="mx-auto max-w-3xl space-y-3">
           {faqs.map(([q, a]) => (
             <details key={q} className="group rounded-2xl bg-white p-5 open:pb-6">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg font-semibold text-forest">
@@ -155,7 +156,7 @@ export default function DeliveryPage() {
               <p className="mt-3 leading-relaxed text-muted">{a}</p>
             </details>
           ))}
-        </div>
+        </Reveal>
         <p className="mt-8 text-center text-muted">
           Still have questions?{" "}
           <a href="/contact" className="font-semibold text-forest underline underline-offset-4">

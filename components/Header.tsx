@@ -10,6 +10,7 @@ import { useStore } from "./StoreProvider";
 import { CartIcon, CloseIcon, MenuIcon, SearchIcon, StarIcon } from "./Icons";
 import { ProductVisual } from "./ProductArt";
 import { Logo } from "./ui";
+import { ScrollProgress } from "./Motion";
 
 export function Header() {
   const pathname = usePathname();
@@ -25,7 +26,8 @@ export function Header() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <header className="sticky top-0 z-50 bg-mint/85 backdrop-blur-md">
+    <header className="site-header sticky top-0 z-50 bg-mint/85 backdrop-blur-md transition-shadow duration-300">
+      <ScrollProgress />
       <div className="container-px flex h-20 items-center justify-between gap-4">
         <button
           className="grid h-12 w-12 place-items-center rounded-full bg-white lg:hidden"
@@ -63,10 +65,10 @@ export function Header() {
           </button>
           <Link
             href="/wishlist"
-            className="relative grid h-12 w-12 place-items-center rounded-full bg-white transition hover:scale-105"
+            className="group relative grid h-12 w-12 place-items-center rounded-full bg-white transition hover:scale-105"
             aria-label={`Favourites (${wishlist.length})`}
           >
-            <StarIcon className="h-8 w-8 text-tangerine" />
+            <StarIcon className="h-8 w-8 text-tangerine transition duration-500 group-hover:rotate-[72deg]" />
             <span className="absolute text-[11px] font-bold text-white">{ready ? wishlist.length : 0}</span>
           </Link>
           <Link
@@ -76,11 +78,14 @@ export function Header() {
           >
             <span className="relative">
               <CartIcon className="h-6 w-6" />
-              <span className="absolute -bottom-1 -right-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-forest px-1 text-[10px] font-bold text-white">
+              <span
+                key={cartCount}
+                className="pop absolute -bottom-1 -right-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-forest px-1 text-[10px] font-bold text-white"
+              >
                 {ready ? cartCount : 0}
               </span>
             </span>
-            <span className="font-semibold">{formatPrice(ready ? cartTotal : 0).replace(/\.00$/, "")}</span>
+            <span className="font-semibold">{formatPrice(ready ? cartTotal : 0)}</span>
           </Link>
         </div>
       </div>
